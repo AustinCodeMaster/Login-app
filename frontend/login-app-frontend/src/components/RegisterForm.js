@@ -1,10 +1,11 @@
-import React, {useState } from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function RegisterForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleRegister = async (e)  => {
+    const handleRegister = async (e) => {
         e.preventDefault();
 
         try {
@@ -16,34 +17,48 @@ function RegisterForm() {
               body: JSON.stringify({ username, password}),
             });
             const result = await response.text();
-      alert(result);
-        }catch (error) {
-      console.error('Registration error:', error);
-      alert('Registration failed');
-    }
+            alert(result);
+        } catch (error) {
+            console.error('Registration error:', error);
+            alert('Registration failed');
+        }
     };
 
     return (
-        <form onSubmit={handleRegister}>
+        <div className="form-container">
             <h2>Register</h2>
-            <input
-             type="text"
-             placeholder="Username"
-             value={username}
-             onChange={(e) => setUsername(e.target.value)}
-             required
-            />
-            <br />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <br />
-            <button type="submit">Register</button>
-        </form>
+            <form onSubmit={handleRegister}>
+                <div className="input-group">
+                    <span className="input-icon">👤</span>
+                    <input
+                        type="text"
+                        className="form-input"
+                        placeholder="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                </div>
+                
+                <div className="input-group">
+                    <span className="input-icon">🔒</span>
+                    <input
+                        type="password"
+                        className="form-input"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+
+                <button type="submit" className="login-button">Register</button>
+            </form>
+            
+            <div className="register-link">
+                Already have an account? <Link to="/login">Login</Link>
+            </div>
+        </div>
     );
 }
 
